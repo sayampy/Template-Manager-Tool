@@ -5,8 +5,9 @@ setup(
     version='0.1',
     author='Sayam.py',
     author_email='sujata.howrah.belgachia@gmail.com',
-    description='Template Project Manager',
-    
+    description='Template Managing Tool',
+    long_description=open('README.md','r').read(),
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
