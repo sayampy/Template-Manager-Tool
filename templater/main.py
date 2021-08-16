@@ -12,10 +12,17 @@ def print_version(ctx, param, value):
         return
     click.echo(f'You are using templater version:{templater.__version__}')
     ctx.exit()
+def print_issue(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    click.echo(f'post your issue on {templater.issue_track}')
+    ctx.exit()
 
 @click.group()
 @click.option('--version','-V', is_flag=True, callback=print_version,
               expose_value=False, is_eager=True,help='shows the version of this cli app')
+@click.option('--issue','-i',is_flag=True, callback=print_issue,
+              expose_value=False, is_eager=True,help='shows github issue tracking url')
 def main():
   '''
 \t\tTemplate Project Manager\n
@@ -58,11 +65,11 @@ def show():
 @_()
 @click.argument('project_name', required=True)
 @click.argument('template_name', required=True)
-def load(project_name,template_name):
+def load(template_name, project_name):
   '''
   Load a template on your Project.
-$ tpm load <PROJECT_NAME> <TEMPLATE_NAME>
-after load, you will see a 
+$ tmt load <PROJECT_NAME> <TEMPLATE_NAME>
+after load, you will see a folder on current dir as your project name.
   '''
   
   if template_name not in tmplt:
@@ -84,4 +91,20 @@ after load, you will see a
             fl.write(eval(content))
   click.secho(f"template {template_name} successfully loaded on {project_name} dir")
   
-  
+
+@_()
+@click.argument('template_name',required=True)
+@click.option('--confirm','-c',type=click.Choice(['yes','no'],case_sensitive=False),
+prompt='Confirmation[yes/no]: ')
+def remove(template_name,confirm):
+  '''For Removing Templates'''
+  if confirm == 'no':
+    click.echo('Command Canceled')
+    return
+  template=tmplt.get(template_name)
+  if template==None:
+    click.secho(f"No '{template_name}' template found",fg='red')
+    return
+  tmplt.pop(template_name)
+  json.dump(tmplt,open(tmplt_file,'w'))
+  click.secho(f'{template_name} successfully removed',fg='green')
