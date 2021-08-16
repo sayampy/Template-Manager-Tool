@@ -1,4 +1,4 @@
-# templater
+issue_track='https://github.com/sayampy/Template-Manager-Tool/issues'
 __doc__ = '''
 A cli app to use and create templates locally
 '''
