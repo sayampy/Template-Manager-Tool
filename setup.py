@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='templater-cli',
-    version='0.1',
+    version='0.3',
     author='Sayam.py',
     author_email='sujata.howrah.belgachia@gmail.com',
     description='Template Managing Tool',
