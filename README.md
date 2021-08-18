@@ -1,7 +1,7 @@
 # A cli Project
 ## Installation
 ```bash
-$ pip install templater
+$ pip install templater-cli
 ```
 
 ## Usages
